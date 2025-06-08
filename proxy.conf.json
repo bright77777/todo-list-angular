@@ -1,0 +1,7 @@
+{
+  "/api/v1/todo-list": {
+    "target": "http://localhost:5001",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

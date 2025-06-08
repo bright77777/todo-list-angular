@@ -1,15 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Task {
-  title: string;
-  description: string;
-  status: 'stopped' | 'started' | 'finished';
-  creeLe: string;
-}
-
-const STORAGE_KEY = 'todo-tasks';
+import { TodoService, Task } from './todo.service';
 
 @Component({
   selector: 'app-root',
@@ -17,60 +9,50 @@ const STORAGE_KEY = 'todo-tasks';
   styleUrls: ['./app.scss'],
   imports: [CommonModule, FormsModule]
 })
-export class App {
+export class App implements OnInit {
   tasks: Task[] = [];
   newTask = '';
   newDescription = '';
   openedDescription: number | null = null;
 
-  constructor() {
-    let saved: string | null = null;
-    if (typeof window !== 'undefined' && window.localStorage) {
-      saved = localStorage.getItem(STORAGE_KEY);
-    }
-    if (saved) {
-      this.tasks = JSON.parse(saved);
-    } else {
-      this.tasks = [
-        { title: 'HTML', description: 'Langage de balisage', status: 'started', creeLe: new Date().toLocaleString() },
-        { title: 'CSS', description: 'Feuilles de style', status: 'started', creeLe: new Date().toLocaleString() },
-        { title: 'JS', description: 'JavaScript', status: 'finished', creeLe: new Date().toLocaleString() },
-        { title: 'Bootstrap', description: 'Framework CSS', status: 'stopped', creeLe: new Date().toLocaleString() }
-      ];
-      this.saveTasks();
-    }
+  constructor(private todoService: TodoService) {}
+
+  ngOnInit() {
+    this.loadTasks();
   }
 
-  private saveTasks() {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
-    }
+  loadTasks() {
+    this.todoService.getTasks().subscribe(tasks => this.tasks = tasks);
   }
 
   addTask() {
     if (this.newTask.trim()) {
-      this.tasks.push({
+      const task: Task = {
         title: this.newTask.trim(),
         description: this.newDescription.trim(),
         status: 'started',
         creeLe: new Date().toLocaleString()
-      });
+      };
+      this.todoService.addTask(task).subscribe(() => this.loadTasks());
       this.newTask = '';
       this.newDescription = '';
-      this.saveTasks();
     }
   }
 
   deleteTask(index: number) {
-    this.tasks.splice(index, 1);
-    this.saveTasks();
+    const task = this.tasks[index];
+    if (task.id) {
+      this.todoService.deleteTask(task.id).subscribe(() => this.loadTasks());
+    }
   }
 
   startEdit(index: number) {
     this.newTask = this.tasks[index].title;
     this.newDescription = this.tasks[index].description;
-    this.tasks.splice(index, 1);
-    this.saveTasks();
+    const task = this.tasks[index];
+    if (task.id) {
+      this.todoService.deleteTask(task.id).subscribe(() => this.loadTasks());
+    }
   }
 
   toggleDescription(index: number) {
@@ -78,14 +60,15 @@ export class App {
   }
 
   cycleStatus(task: Task) {
-    if (task.status === 'stopped') {
-      task.status = 'started';
-    } else if (task.status === 'started') {
-      task.status = 'finished';
-    } else {
-      task.status = 'stopped';
+    let newStatus: Task['status'];
+    if (task.status === 'stopped') newStatus = 'started';
+    else if (task.status === 'started') newStatus = 'finished';
+    else newStatus = 'stopped';
+
+    const updatedTask = { ...task, status: newStatus };
+    if (task.id) {
+      this.todoService.updateTask(updatedTask).subscribe(() => this.loadTasks());
     }
-    this.saveTasks();
   }
 }
 

@@ -1,0 +1,68 @@
+
+ <section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">To Do App</h4>
+
+            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" (ngSubmit)="addTask()" #todoForm="ngForm">
+              <div class="col-12">
+                <div class="form-outline">
+                  <input type="text" class="form-control"
+                     [(ngModel)]="newTask"
+                     name="task"
+                     placeholder="Add new task"
+                     required />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary" [disabled]="!newTask">Save</button>
+              </div>
+            </form>
+
+            <table class="table mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Todo item</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of tasks; let i = index">
+                  <input *ngIf="editIndex === i"
+                     [(ngModel)]="editTask"
+                     class="form-control edit-input"
+                     (keyup.enter)="saveEdit(i)"
+                     (blur)="saveEdit(i)"
+                     autofocus>
+                  <span *ngIf="editIndex !== i" >{{ i +1}}</span>
+
+                  <span *ngIf="editIndex !== i" >{{ task }}</span>
+                  <td>In progress</td>
+                  <div class="btn-group">
+                    <button class="btn btn-danger btn-sm delete-btn" (click)="deleteTask(i)">
+                      &#x2715;
+                    </button>
+                    <button class="btn btn-primary btn-sm edit-btn" (click)="startEdit(i)">
+                      {{ editIndex === i ? '✔' : '✎' }}
+                    </button>
+                  </div>
+                </tr>
+               
+               
+              </tbody>
+              
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
