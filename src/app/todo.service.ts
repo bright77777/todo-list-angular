@@ -8,9 +8,9 @@ export interface Task {
   description: string;
   status: 'stopped' | 'started' | 'finished';
   creeLe: string;
-}
+}    
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root' })  
 export class TodoService {
   private apiUrl = 'http://localhost:5001/api/v1/todo-list';
 
