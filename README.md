@@ -1,29 +1,107 @@
-# TodoListAngular
+
+### 🌐 **README.md – Frontend (Angular)**  
+📁 **Repo**: `https://github.com/bright77777/todo-list-angular`
+
+```markdown
+# To-Do List – Frontend (Angular)
+
+This is the frontend for the Full-Stack To-Do List Application. It connects to the Express.js backend API to display and manage tasks.
+
+## 🧰 Tech Stack
+
+- Angular 17
+- TypeScript
+- Bootstrap (for styling)
+- HTTPClientModule
+
+## 🚀 Features
+
+- View the list of tasks
+- Add new task (title + description)
+- Edit existing task
+- Delete task
+- Responsive UI
+- Smooth Animation 
+
+## 🔗 API Connection
+
+The frontend communicates with the backend REST API hosted locally or remotely. Make sure the backend is running and accessible.
+
+Default backend URL (configured in the service):
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
 
-## Development server
+# To-Do List – Frontend (Angular)
 
-To start a local development server, run:
+This is the frontend for the Full-Stack To-Do List Application. It connects to the Express.js backend API to display and manage tasks.
+
+## 🧰 Tech Stack
+
+- Angular 17
+- TypeScript
+- Bootstrap
+- HTTPClientModule
+
+## 🚀 Features
+
+- View the list of tasks
+- Add a new task (title + description)
+- Edit an existing task
+- Delete a task
+- Responsive UI
+
+## 🔗 API Connection
+
+The frontend communicates with the backend REST API hosted locally or remotely. Make sure the backend is running and accessible.
+
+Default backend URL:
+
+http://localhost:5001
+
+Update the URL in `task.service.ts` if the backend is hosted elsewhere.
+
+## ⚙️ Setup Instructions
+
+1. Clone the repository
 
 ```bash
-ng serve
-```
+git clone https://github.com/bright77777/todo-list-angular.git
+cd todo-list-angular
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2.	Install dependencies
 
-## Code scaffolding
+npm install
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+	3.	Run the Angular app
 
-```bash
-ng generate component component-name
-```
+npm run start 
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The application will be available at:
 
-```bash
-ng generate --help
+http://localhost:4200
+
+📁 Project Structure
+
+.
+├── src
+│   ├── app
+│   │   ├── components
+│   │   │  
+│   │   ├── models
+│   │   ├── todo.service
+            app.html
+│   │   └── app.ts
+│   └── main.ts
+├── angular.json
+├── package.json
+└── README.md
+
+📝 Notes
+	•	All data operations are performed via the backend API.
+	•	Make sure the backend is running and accessible to use the app properly.
+
+
+
 ```
 
 ## Building
@@ -34,26 +112,12 @@ To build the project run:
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
